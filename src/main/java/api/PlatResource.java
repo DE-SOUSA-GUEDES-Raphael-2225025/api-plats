@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.Response;
 /**
  * Ressource API REST pour la gestion des plats.
  */
-@Path("/plat")
+@Path("/plats")
 @ApplicationScoped
 public class PlatResource {
 
