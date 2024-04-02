@@ -35,4 +35,9 @@ public interface PlatRepositoryInterface {
     boolean createPlat(String name, String description, Double price);
 
     boolean deletePlat(String id);
+
+    Plat findPlatById(String id);
+
+    Double findPlatPriceById(String id);
 }
+

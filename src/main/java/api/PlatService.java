@@ -72,11 +72,11 @@ public class PlatService {
     }
 
     public Double getPlatPrice(String id) {
-        Plat plat = platRepo.findPlatById(id); // Supposons que vous ayez une méthode pour trouver un plat par son ID.
+        Plat plat = platRepo.findPlatById(id);
         if (plat != null) {
             return plat.getPrice();
         }
-        return null; // Ou gérer différemment si le plat n'est pas trouvé.
+        return null;
     }
 
 }

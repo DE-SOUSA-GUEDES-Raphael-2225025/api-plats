@@ -67,7 +67,7 @@ public class PlatResource {
 
     }
     @GET
-    @Path("/{id}/price")
+    @Path("price/{id}/")
     @Produces("application/json")
     public Response getPlatPrice(@PathParam("id") String id) {
         Double price = service.getPlatPrice(id);

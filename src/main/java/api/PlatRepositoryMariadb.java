@@ -113,4 +113,31 @@ public class PlatRepositoryMariadb implements PlatRepositoryInterface, Closeable
         }
     }
 
+    @Override
+    public Plat findPlatById(String id) {
+        final String query = "SELECT * FROM Plats WHERE id = ?";
+        try (PreparedStatement ps = dbConnection.prepareStatement(query)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Plat(
+                            rs.getString("id"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getDouble("price")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la recherche du plat avec l'ID : " + id, e);
+        }
+        return null; // Retourne null si aucun plat n'est trouvé
+    }
+
+    @Override
+    public Double findPlatPriceById(String id) {
+        return null;
+    }
+
+
 }
