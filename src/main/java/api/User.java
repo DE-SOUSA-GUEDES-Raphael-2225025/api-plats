@@ -10,6 +10,8 @@ public class User {
         this.password = password;
         this.surname = surname;
     }
+
+
     // Getters
     public String getLogin() {
         return login;

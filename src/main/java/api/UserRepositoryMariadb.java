@@ -16,15 +16,33 @@ public class UserRepositoryMariadb implements UserRepositoryInterface {
     }
 
     @Override
+    public void close() {
+
+    }
+
+    @Override
     public User getUser(String login) {
         // Implémentez la requête SQL pour récupérer un utilisateur
         return null; // exemple simplifié
     }
 
-    @Override
     public ArrayList<User> getAllUsers() {
-        // Implémentez la requête SQL pour récupérer tous les utilisateurs
-        return null; // exemple simplifié
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT id, login, password, name FROM users"; // Assurez-vous que ces colonnes existent dans votre table
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                User user = new User(resultSet.getString("surname"),resultSet.getString("login"), resultSet.getString("password"), resultSet.getString("name"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // En production, envisagez de logger cette exception plutôt que d'imprimer sa stack trace.
+        }
+
+        return users;
     }
 
 }

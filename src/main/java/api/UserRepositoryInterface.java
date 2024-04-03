@@ -1,22 +1,30 @@
 package api;
 import java.util.ArrayList;
 
+
+import java.util.*;
+
+/**
+ * Interface d'accès aux données des utilisateurs
+ */
 public interface UserRepositoryInterface {
 
     /**
-     * Méthode pour obtenir un utilisateur par son login.
-     *
-     * @param login Le login de l'utilisateur à rechercher.
-     * @return L'utilisateur correspondant au login, ou null si aucun utilisateur n'est trouvé.
+     *  Méthode fermant le dépôt où sont stockées les informations sur les utilisateurs
      */
-    User getUser(String login);
+    public void close();
 
     /**
-     * Méthode pour obtenir tous les utilisateurs disponibles.
-     *
-     * @return Une liste de tous les utilisateurs.
+     * Méthode retournant l'utilisateur dont l'identifiant est passée en paramètre
+     * @param id identifiant de l'utilisateur recherché
+     * @return un objet User représentant l'utilisateur recherché
      */
-    ArrayList<User> getAllUsers();
+    public User getUser( String id );
 
+    /**
+     * Méthode retournant la liste des utilisateurs
+     * @return une liste d'objets utilisateurs
+     */
+    public ArrayList<User> getAllUsers();
 
 }

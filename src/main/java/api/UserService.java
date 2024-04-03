@@ -6,7 +6,14 @@ import java.util.ArrayList;
 
 public class UserService {
 
+
+    private UserService userService;
+
     private UserRepositoryInterface userRepo;
+    public UserService(UserRepositoryInterface userRepo) {
+        this.userRepo = userRepo;
+    }
+
 
     // Supposant qu'il y a un constructeur ou une méthode d'initialisation pour userRepo...
 
