@@ -67,10 +67,28 @@ public class PlatService {
         return platRepo.updatePlat(id, plat.getName(), plat.getDescription(), plat.getPrice());
     }
 
-    public boolean createPlat(String name, String description, Double price){
+    /**
+     * Crée un nouveau plat dans le système.
+     * Cette méthode délègue la création d'un plat à la couche de persistance, en fournissant
+     * le nom, la description et le prix du plat à créer.
+     *
+     * @param name Le nom du plat à créer.
+     * @param description La description du plat.
+     * @param price Le prix du plat.
+     * @return {@code true} si le plat a été créé avec succès, {@code false} sinon.
+     */
+    public boolean createPlat(String name, String description, Double price) {
         return platRepo.createPlat(name, description, price);
     }
 
+    /**
+     * Récupère le prix d'un plat spécifique en utilisant son identifiant.
+     * Cette méthode recherche d'abord le plat par son identifiant dans la couche de persistance.
+     * Si le plat est trouvé, elle retourne son prix. Sinon, elle retourne {@code null}.
+     *
+     * @param id L'identifiant unique du plat dont on souhaite obtenir le prix.
+     * @return Le prix du plat si trouvé, {@code null} sinon.
+     */
     public Double getPlatPrice(String id) {
         Plat plat = platRepo.findPlatById(id);
         if (plat != null) {
@@ -78,5 +96,6 @@ public class PlatService {
         }
         return null;
     }
+
 
 }
