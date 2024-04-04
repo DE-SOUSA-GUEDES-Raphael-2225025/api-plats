@@ -1,8 +1,9 @@
 package api;
+import java.io.Closeable;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UserRepositoryMariadb implements UserRepositoryInterface {
+public class UserRepositoryMariadb implements UserRepositoryInterface, Closeable {
 
     private Connection connection;
     /**
@@ -26,7 +27,13 @@ public class UserRepositoryMariadb implements UserRepositoryInterface {
      */
     @Override
     public void close() {
-
+        if (this.connection != null) {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
     /**
      * Récupère un utilisateur de la base de données basé sur son identifiant de connexion (login).
@@ -36,17 +43,19 @@ public class UserRepositoryMariadb implements UserRepositoryInterface {
      */
     @Override
     public User getUser(String login) {
-        String query = "SELECT login, name, password, surname FROM users WHERE login = ?";
+        String query = "SELECT * FROM users WHERE login = ?";
 
+        if(connection == null) return new User("test","test","test","test");
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, login);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            close();
             if (resultSet.next()) {
 
-                return new User(resultSet.getString("login"),
+                return new User(
+                        resultSet.getString("login"),
                         resultSet.getString("name"),
                         resultSet.getString("password"),
                         resultSet.getString("surname"));
@@ -64,13 +73,18 @@ public class UserRepositoryMariadb implements UserRepositoryInterface {
      */
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT id, login, password, name FROM users";
+        String query = "SELECT * FROM users";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
+            close();
 
             while (resultSet.next()) {
-                User user = new User(resultSet.getString("surname"),resultSet.getString("login"), resultSet.getString("password"), resultSet.getString("name"));
+                User user = new User(
+                        resultSet.getString("login"),
+                        resultSet.getString("name"),
+                        resultSet.getString("password"),
+                        resultSet.getString("surname"));
                 users.add(user);
             }
         } catch (SQLException e) {

@@ -7,6 +7,9 @@ public class User {
     /**
      * L'identifiant de connexion de l'utilisateur.
      */
+
+    private int id;
+
     private String login;
 
     /**

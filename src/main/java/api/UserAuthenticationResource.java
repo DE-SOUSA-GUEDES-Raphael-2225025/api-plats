@@ -58,10 +58,13 @@ public class UserAuthenticationResource {
         final String login = tokens[0];
         final String password = tokens[1];
 
+        String user = null;
         // authentification
-        res = auth.isValidUser(login, password);
+        if(auth.isValidUser(login, password)){
+            user = auth.getUserJson(login);
+        }
 
         // envoie d'une réponse avec la valeur de l'authentification
-        return Response.ok(String.valueOf(res)).build();
+        return Response.ok(String.valueOf(user)).build();
     }
 }

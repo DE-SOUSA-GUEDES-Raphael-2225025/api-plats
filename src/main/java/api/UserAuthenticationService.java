@@ -1,4 +1,8 @@
 package api;
+
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+
 /**
  * Classe représentant le cas d'utilisation "authentifier un utilisateur"
  */
@@ -36,5 +40,17 @@ public class UserAuthenticationService {
             return false;
 
         return true;
+    }
+
+    public String getUserJson(String login){
+        User user = userRepo.getUser(login);
+
+        // création du json et conversion de la liste de menus
+        try (Jsonb jsonb = JsonbBuilder.create()) {
+            return jsonb.toJson(user);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
 }
